@@ -32,5 +32,5 @@ With a simple interface, the Python application uses the Tkinter module together
 # How to execute the project
 1. Clone the project using the ```git clone https://github.com/abeejita/bento_buddy.git``` command.
 2. Add a ```.env``` file to set the API_KEY and BASE_URL variables. Please consult the team on how to obtain these values.
-3. Install packages: python-dotenv, pillow and requests through a pip install xyz.
+3. Install packages: ```python-dotenv```, ```pillow``` and ```requests``` through a pip install ```xyz```.
 4. Execute the project by clicking on the ```Run Python File``` button of your favorite IDLE or by running the ```python bento_buddy.py``` command in your terminal (make sure you are in the correct directory first).
