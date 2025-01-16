@@ -1,3 +1,9 @@
+## Bento Buddy: A recipe finder application that uses the Spoonacular API 
+#  to find recipes based on the ingredients that the user has at home.
+## Authors: Noemi Abigail Curiel Lopez
+#           Leonardo Garcia Ledezma
+## Date: 08/01/2025
+
 from tkinter import *
 import os
 from dotenv import load_dotenv
@@ -56,6 +62,16 @@ recipe_button_style = {
 
 
 def lookup_word():
+    """
+    Looks for an ingredient in the Spoonacular API.
+
+    Args:
+        No arguments.
+    
+    Returns:
+        No return value.
+    """
+
     global add_button
     query = SearchString.get()
     endpoint =  base_url + "/food/ingredients/search?"
@@ -85,6 +101,16 @@ def lookup_word():
     SearchResultBar.config(text=result)
 
 def show_main_screen():
+    """
+    Shows the main screen of the application.
+
+    Args:
+        No arguments.
+    
+    Returns:
+        No return value.
+    """
+
     main_frame.pack(pady = 10)
     result_frame.pack(pady = 10)
     lookup_label.pack(pady = 5)
@@ -96,6 +122,16 @@ def show_main_screen():
     recipe_card_frame.pack_forget()
 
 def show_recipe_screen():
+    """
+    Shows the recipe screen of the application.
+
+    Args:
+        No arguments.
+    
+    Returns:
+        No return value.
+    """
+
     find_recipes()
     main_frame.pack_forget()
     lookup_label.pack_forget()
@@ -108,6 +144,16 @@ def show_recipe_screen():
     recipe_card_frame.pack_forget()
 
 def show_card_screen(recipe_id):
+    """
+    Shows the recipe card screen of the application.
+
+    Args:
+        No arguments.
+    
+    Returns:
+        No return value.
+    """
+
     main_frame.pack_forget()
     lookup_label.pack_forget()
     Searchbar.pack_forget()
@@ -121,10 +167,30 @@ def show_card_screen(recipe_id):
     show_recipe_cards(recipe_id)
 
 def clear_frame(frame):
+    """
+    Clears the contents of a frame.
+
+    Args:
+        frame: The frame to clear.
+    
+    Returns:
+        No return value.
+    """
+
     for widget in frame.winfo_children():
         widget.destroy()
 
 def show_recipe_cards(recipe_id):
+    """
+    Shows the recipe card of a recipe.
+
+    Args:
+        recipe_id: The ID of the recipe to show.
+    
+    Returns:
+        No return value.
+    """
+
     endpoint =  base_url + "/recipes/" + str(recipe_id) + "/card"
     params = {
         'apiKey': api_key
@@ -182,6 +248,16 @@ def show_recipe_cards(recipe_id):
         print(result)
 
 def show_recipes(recipes):
+    """
+    Shows the recipes.
+
+    Args:
+        recipes: The recipes to show.
+    
+    Returns:
+        No return values.
+    """
+
     clear_frame(recipe_frame)
 
     top_frame = Frame(recipe_frame)
@@ -198,6 +274,16 @@ def show_recipes(recipes):
         recipe_button.pack(pady = 5)
 
 def find_recipes():
+    """
+    Finds recipes based on the ingredients.
+
+    Args:
+        No arguments.
+    
+    Returns:
+        No return values.
+    """
+
     ingredients = ",".join(added_ingredients)
     query = SearchString.get()
     endpoint =  base_url + "/recipes/findByIngredients?"
@@ -216,6 +302,16 @@ def find_recipes():
         result = "ERROR: " + str(response.status_code)
 
 def update_ingredients():
+    """
+    Updates the ingredients.
+
+    Args:
+        No arguments.
+    
+    Returns:
+        No return values.
+    """
+
     for widget in ingredients_frame.winfo_children():
         widget.destroy()
 
@@ -231,6 +327,16 @@ def update_ingredients():
         remove_button.pack(side = LEFT, padx = 5)
 
 def add_ingredient():
+    """
+    Adds an ingredient to the list of ingredients.
+
+    Args:
+        No arguments.
+    
+    Returns:
+        No return value.
+    """
+
     ingredient = SearchResultBar.cget("text")
     if ingredient and ingredient != "No results found." and not ingredient.startswith("ERROR:"):
         added_ingredients.append(ingredient)
@@ -238,6 +344,16 @@ def add_ingredient():
         print(added_ingredients)
 
 def remove_ingredient(ingredient):
+    """
+    Removes an ingredient from the list of ingredients.
+
+    Args:
+        ingredient: The ingredient to remove.
+    
+    Returns:
+        No return value.
+    """
+
     added_ingredients.remove(ingredient)
     update_ingredients()
 
@@ -256,7 +372,7 @@ logo_label.pack(pady = (50, 30))
 app_label = Label(main_frame, text = "Bento Buddy", font = ("Arial", 24, "bold"))
 app_label.pack(pady = (10, 30))
 
-lookup_label = Label(main_frame, text="Please select the ingredients: ", font = ("Arial", 14, "bold"))
+lookup_label = Label(main_frame, text = "Please select the ingredients: ", font = ("Arial", 14, "bold"))
 lookup_label.pack(pady = 5)
 
 SearchString = StringVar()
