@@ -28,6 +28,7 @@ button_style = {
     "height": 1, 
     "bg": "#2C2C2C",  
     "font": ("Arial", 14),
+    "fg": "white"
 }
 
 remove_button_style = {
@@ -36,20 +37,20 @@ remove_button_style = {
     "highlightthickness": 0,
     "width": 10,
     "height": 1,
-    "bg": "#FF0000",  
+    "bg": "#FFA896",  
     "font": ("Arial", 14),
 }
-# no agarra color
-# go_back_button_style = {
-#     "borderwidth": 2,
-#     "relief": "solid",
-#     "highlightthickness": 0,
-#     "width": 10,
-#     "height": 1,
-#     "bg": "#2C2C2C",  
-#     "font": ("Arial", 14),
-    
-# }
+
+go_back_button_style = {
+    "borderwidth": 2,
+    "relief": "solid",
+    "highlightthickness": 0,
+    "width": 10,
+    "height": 1,
+    "bg": "#2C2C2C",  
+    "font": ("Arial", 14),
+    "text_color": "ffffff"
+}
 
 recipe_button_style = {
     "borderwidth": 2,
@@ -59,7 +60,6 @@ recipe_button_style = {
     "bg": "white",  
     "font": ("Arial", 14),
 }
-
 
 def lookup_word():
     """
@@ -87,8 +87,6 @@ def lookup_word():
         data = response.json()
         if data["results"]:
             result = data["results"][0]["name"].capitalize()
-            # result_label = Label(result_frame, text = result, font = ("Arial", 14))
-            # result_label.pack(side = LEFT, padx = 5)
             if not add_button:
                 add_button = Button(result_frame, text = "Add", command = add_ingredient, **button_style)
                 add_button.pack(side = LEFT, padx = 5)
@@ -97,8 +95,7 @@ def lookup_word():
     else:
         result = "ERROR: " + str(response.status_code)
 
-    # print(result)
-    SearchResultBar.config(text=result)
+    SearchResultBar.config(text = result)
 
 def show_main_screen():
     """
@@ -220,8 +217,8 @@ def show_recipe_cards(recipe_id):
 
             back_button = Button(top_frame, text = "Go Back", command = show_recipe_screen, **button_style)
             back_button.pack(side = LEFT, padx = 5, pady = 5)
-            # spacer = Frame(top_frame, width=20)  
-            # spacer.pack(side=LEFT)
+            spacer = Frame(top_frame, width=20)  
+            spacer.pack(side=LEFT)
 
             recipe_card_label = Label(recipe_card_frame, image = recipe_card_image)
             recipe_card_label.image = recipe_card_image
@@ -270,7 +267,7 @@ def show_recipes(recipes):
     recipes_label.pack(pady = 5)
 
     for recipe in recipes:
-        recipe_button = Button(recipe_frame, text = recipe["title"], command = lambda recipe_id=recipe["id"]: show_card_screen(recipe_id), **recipe_button_style)
+        recipe_button = Button(recipe_frame, text = recipe["title"], command = lambda recipe_id = recipe["id"]: show_card_screen(recipe_id), **recipe_button_style)
         recipe_button.pack(pady = 5)
 
 def find_recipes():
@@ -387,14 +384,13 @@ lookup_button.pack(side = RIGHT, padx = 5)
 result_frame = Frame(root)
 result_frame.pack(pady = 10)
 
-SearchResultBar = Label(result_frame)
+SearchResultBar = Label(result_frame, font = ("Arial", 14))
 SearchResultBar.pack(side = LEFT, padx = 5)
 
 ingredients_frame = Frame(root)
 ingredients_frame.pack(pady = 10)
 
 find_button = Button(root, text = "Find Recipes", command = show_recipe_screen, **button_style)
-#  bg = "#321B41", fg = "#ffffff",
 find_button.pack(padx = 5)
 
 added_ingredients = []
